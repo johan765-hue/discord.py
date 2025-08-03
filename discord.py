@@ -27,37 +27,26 @@ async def como (ctx):
 async def como (ctx):
     await ctx.send(f"Analyzing question")
 
-@bot.command()
-async def roll(ctx, dice: str):
-    """Rolls a dice in NdN format."""
-    try:
-        rolls, limit = map(int, dice.split('d'))
-    except Exception:
-        await ctx.send('Format has to be in NdN!')
-        return
+import datetime
+from discord.ext import commands, tasks
 
-    result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
-    await ctx.send(result)
+utc = datetime.timezone.utc
 
+# If no tzinfo is given then UTC is assumed.
+time = datetime.time(hour=8, minute=30, tzinfo=utc)
 
-@bot.command(description='For when you wanna settle the score some other way')
-async def choose(ctx, *choices: str):
-    """Chooses between multiple choices."""
-    await ctx.send(random.choice(choices))
+class MyCog(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self.my_task.start()
 
+    def cog_unload(self):
+        self.my_task.cancel()
 
-@bot.command()
-async def repeat(ctx, times: int, content='repeating...'):
-    """Repeats a message multiple times."""
-    for i in range(times):
-        await ctx.send(content)
-
-
-@bot.command()
-async def joined(ctx, member: discord.Member):
-    """Says when a member joined."""
-    await ctx.send(f'{member.name} joined {discord.utils.format_dt(member.joined_at)}')
-
+    @tasks.loop(time=time)
+    async def my_task(self):
+        print("My task is running!")
+        
 @bot.command()
 async def algo(ctx):
     await ctx.send(f"Algo mas que puedo aser por ti? {user.respond}")
