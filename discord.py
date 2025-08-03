@@ -60,7 +60,7 @@ async def joined(ctx, member: discord.Member):
 
 @bot.command()
 async def algo(ctx):
-    await ctx.send(f"Algo mas que puedo aser por ti {user.respond}")
+    await ctx.send(f"Algo mas que puedo aser por ti? {user.respond}")
     
 @coco.command()
 async def adios(ctx):
