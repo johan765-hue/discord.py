@@ -58,7 +58,10 @@ async def joined(ctx, member: discord.Member):
     """Says when a member joined."""
     await ctx.send(f'{member.name} joined {discord.utils.format_dt(member.joined_at)}')
 
-
+@bot.command()
+async def algo(ctx):
+    await ctx.send(f"Algo mas que puedo aser por ti {user.respond}")
+    
 @coco.command()
 async def adios(ctx):
     await ctx.send(f"Adios {user.respond}")
